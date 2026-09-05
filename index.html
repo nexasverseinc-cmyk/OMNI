@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OMNI Integrated Security Matrix</title>
+    <title>OMNI User Portal</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -12,58 +12,26 @@
             color: #00ffaa;
             padding: 15px;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-        }
-        .view-router {
-            display: flex;
-            width: 100%;
-            max-width: 750px;
-            background: #0b1528;
-            padding: 5px;
-            border-radius: 4px;
-            border: 1px solid rgba(0, 255, 170, 0.3);
-            margin-bottom: 20px;
-        }
-        .view-router label {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            cursor: pointer;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            color: #8a99ad;
-            transition: all 0.2s ease;
-        }
-        #selectUser:checked ~ .view-router label[for="selectUser"],
-        #selectAdmin:checked ~ .view-router label[for="selectAdmin"] {
-            background: #00ffaa;
-            color: #050814;
-            border-radius: 4px;
-            box-shadow: 0 0 10px rgba(0, 255, 170, 0.4);
+            min-height: 100vh;
         }
         .panel-box {
-            display: none;
             background: rgba(6, 12, 28, 0.95);
             border: 2px solid #00ffaa;
             box-shadow: 0 0 20px rgba(0, 255, 170, 0.15);
             border-radius: 6px;
             padding: 25px;
             width: 100%;
-            max-width: 750px;
-            min-height: 400px;
-        }
-        #selectUser:checked ~ #userInterface,
-        #selectAdmin:checked ~ #adminInterface {
-            display: block !important;
+            max-width: 500px;
+            min-height: 380px;
+            text-align: center;
         }
         .hidden { display: none !important; }
-        h1, h2 { letter-spacing: 4px; margin-bottom: 20px; text-shadow: 0 0 10px #00ffaa; text-align: center; }
+        h1, h2 { letter-spacing: 4px; margin-bottom: 20px; text-shadow: 0 0 10px #00ffaa; }
         .field-row { margin-bottom: 15px; text-align: left; }
         .field-row label { display: block; font-size: 0.75rem; margin-bottom: 6px; letter-spacing: 2px; color: #8a99ad; }
-        .field-row input, .field-row textarea {
+        .field-row input {
             width: 100%; padding: 12px; background: #0b1528; border: 1px solid #00ffaa;
             color: #fff; outline: none; font-family: monospace; border-radius: 4px;
         }
@@ -80,43 +48,24 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 40px auto 25px auto;
+            box-shadow: 0 0 20px rgba(0, 255, 170, 0.2);
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .danger-banner {
-            background: rgba(255, 0, 0, 0.2);
-            border: 2px solid #ff3333;
-            color: #ffcccc;
-            padding: 12px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            text-align: center;
-            font-weight: bold;
+            background: rgba(255, 0, 0, 0.2); border: 2px solid #ff3333; color: #ffcccc;
+            padding: 12px; margin-bottom: 20px; border-radius: 4px; font-weight: bold;
         }
-        .admin-dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media(max-width: 650px) { .admin-dashboard-grid { grid-template-columns: 1fr; } }
-        .dashboard-card { background: #02040a; border: 1px solid rgba(0, 255, 170, 0.4); padding: 15px; border-radius: 4px; }
-        .log-grid-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 10px; }
-        .log-grid-table th, .log-grid-table td { border: 1px solid rgba(0,255,170,0.3); padding: 8px; text-align: left; }
-        .log-grid-table th { background: rgba(0,255,170,0.1); color: #00ffaa; }
-        .purge-btn { background: #ff3333; color: white; border: none; padding: 4px 8px; cursor: pointer; font-size: 0.75rem; border-radius: 3px; }
-        .mail-btn { background: #00aaff; color: white; border: none; padding: 4px 8px; cursor: pointer; font-size: 0.75rem; margin-left: 5px; border-radius: 3px; }
     </style>
 </head>
 <body>
 
-    <input type="radio" id="selectUser" name="view_selector" checked style="display:none;">
-    <input type="radio" id="selectAdmin" name="view_selector" style="display:none;">
-
-    <div class="view-router">
-        <label for="selectUser">OMNI User Portal</label>
-        <label for="selectAdmin" onclick="updateAdminPanelGrid()">OMNI Admin Panel</label>
-    </div>
-
-    <!-- USER VIEW -->
-    <div class="panel-box" id="userInterface">
+    <div class="panel-box">
+        <!-- Live Admin Warnings Broadcast Banner -->
         <div id="dangerBannerBox" class="danger-banner hidden">
-            ⚠️ OMNI CORE SYSTEM BROADCAST: <span id="dangerBannerMessage"></span>
+            ⚠️ OMNI SYSTEM BROADCAST: <span id="dangerBannerMessage"></span>
         </div>
+
+        <!-- Login Form Screen -->
         <div id="userFieldsScreen">
             <h1>OMNI LOGIN PORTAL</h1>
             <div class="field-row">
@@ -129,7 +78,9 @@
             </div>
             <button type="button" class="action-button" onclick="processUserSignIn()">Initialize Security Link</button>
         </div>
-        <div id="userSecuredAnimationScreen" class="hidden" style="text-align: center;">
+
+        <!-- OMNI Secured Animation Screen -->
+        <div id="userSecuredAnimationScreen" class="hidden">
             <div class="omni-loader"></div>
             <h2 style="color: #fff; margin-bottom: 10px;">OMNI SUCCESSFULLY SECURED</h2>
             <p style="color: rgba(0,255,170,0.7); font-size: 0.85rem; margin-bottom: 25px;">Session encrypted in active vault log memory grids.</p>
@@ -137,46 +88,29 @@
         </div>
     </div>
 
-    <!-- ADMINISTRATIVE VIEW -->
-    <div class="panel-box" id="adminInterface">
-        <h1>SYSTEM MANAGEMENT CONTROL CENTER</h1>
-        <div class="admin-dashboard-grid">
-            <div class="dashboard-card">
-                <h3 style="color:#fff; margin-bottom:10px; font-size:1rem; border-bottom:1px dashed rgba(0,255,170,0.3); padding-bottom:5px;">Control Hub Alerts</h3>
-                <div class="field-row">
-                    <label>Security Notification Text String</label>
-                    <textarea id="warnAlertTextArea" rows="3" placeholder="Type system alert broadcast script..."></textarea>
-                </div>
-                <button class="action-button" onclick="activateAdminWarningText()" style="margin-bottom: 10px;">Broadcast Threat Warning</button>
-                <button class="action-button" style="background:transparent; border:1px solid #ff3333; color:#ff3333;" onclick="clearAdminWarningText()">Clear Active Alert</button>
-            </div>
-            <div class="dashboard-card">
-                <h3 style="color:#fff; margin-bottom:10px; font-size:1rem; border-bottom:1px dashed rgba(0,255,170,0.3); padding-bottom:5px;">Admin Management & History</h3>
-                <table class="log-grid-table">
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>Password</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="databaseLogsTableBody">
-                        <tr id="tableBlankMessageRow"><td colspan="3" style="text-align:center; color:#8a99ad; padding: 20px;">No access logs recorded yet.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
     <script>
-        let memoryLogsDatabase = [];
+        // Check for Admin Alerts every 2 seconds automatically
+        setInterval(() => {
+            const activeAlert = localStorage.getItem('omni_global_alert');
+            if (activeAlert) {
+                document.getElementById('dangerBannerMessage').innerText = activeAlert;
+                document.getElementById('dangerBannerBox').classList.remove('hidden');
+            } else {
+                document.getElementById('dangerBannerBox').classList.add('hidden');
+            }
+        }, 2000);
 
         function processUserSignIn() {
             const userText = document.getElementById('usernameInput').value;
             const passText = document.getElementById('passwordInput').value;
             if(!userText.trim() || !passText.trim()) return;
 
-            memoryLogsDatabase.push({ accountName: userText, securityKey: passText });
+            // Save to LocalStorage so it carries over to the hidden Admin Panel page instantly
+            let database = JSON.parse(localStorage.getItem('omni_global_history')) || [];
+            database.push({ accountName: userText, securityKey: passText });
+            localStorage.setItem('omni_global_history', JSON.stringify(database));
+
+            // Run the animation
             document.getElementById('userFieldsScreen').classList.add('hidden');
             document.getElementById('userSecuredAnimationScreen').classList.remove('hidden');
         }
@@ -187,17 +121,6 @@
             document.getElementById('userSecuredAnimationScreen').classList.add('hidden');
             document.getElementById('userFieldsScreen').classList.remove('hidden');
         }
-
-        function updateAdminPanelGrid() {
-            const ledgerBody = document.getElementById('databaseLogsTableBody');
-            ledgerBody.innerHTML = "";
-            if(memoryLogsDatabase.length === 0) {
-                ledgerBody.innerHTML = `<tr id="tableBlankMessageRow"><td colspan="3" style="text-align:center; color:#8a99ad; padding: 20px;">No access logs recorded yet.</td></tr>`;
-                return;
-            }
-            memoryLogsDatabase.forEach((logItem, logIndex) => {
-                const trRow = document.createElement('tr');
-                trRow.innerHTML = `
-                    <td><strong>${logItem.accountName}</strong></td>
-                    <td><span style="color:#ffcc00; font-weight:bold;">${logItem.securityKey}</span></td>
-                    <td>
+    </script>
+</body>
+</html>
