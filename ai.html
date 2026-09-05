@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMNI AI Interface Core</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #050814;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00ffaa;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .ai-container {
+            background: rgba(6, 12, 28, 0.95);
+            border: 2px solid #00ffaa;
+            box-shadow: 0 0 25px rgba(0, 255, 170, 0.2);
+            border-radius: 6px;
+            padding: 25px;
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        h2 { letter-spacing: 3px; text-shadow: 0 0 10px #00ffaa; text-align: center; margin-bottom: 15px; font-size: 1.3rem; }
+        
+        /* Chat Terminal Display Window */
+        .chat-box {
+            flex: 1;
+            background: #02040a;
+            border: 1px solid rgba(0, 255, 170, 0.4);
+            border-radius: 4px;
+            padding: 15px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        .msg { margin-bottom: 12px; padding: 8px; border-radius: 4px; }
+        .bot-msg { background: rgba(0, 255, 170, 0.1); color: #00ffaa; border-left: 3px solid #00ffaa; }
+        .user-msg { background: rgba(0, 170, 255, 0.1); color: #00b8ff; border-right: 3px solid #00b8ff; text-align: right; }
+        
+        /* User Interaction Fields */
+        .input-area { display: flex; gap: 10px; }
+        .input-area input {
+            flex: 1; padding: 12px; background: #0b1528; border: 1px solid #00ffaa;
+            color: #fff; outline: none; font-family: monospace; border-radius: 4px;
+        }
+        .send-btn {
+            background: #00ffaa; color: #050814; font-weight: bold;
+            border: none; padding: 0 20px; cursor: pointer; text-transform: uppercase;
+            letter-spacing: 1px; border-radius: 4px;
+        }
+        .send-btn:hover { background: #fff; box-shadow: 0 0 10px #00ffaa; }
+    </style>
+</head>
+<body>
+
+    <div class="ai-container">
+        <h2>OMNI AI // INTEL_CORE_V1</h2>
+        <div class="chat-box" id="chatBox">
+            <div class="msg bot-msg">> OMNI AI online. I am optimized to analyze user armor frameworks, tactical operations, and security uniform configurations. Query standard instructions?</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Ask OMNI AI about security gear or users..." onkeypress="handleKeyPress(event)">
+            <button class="send-btn" onclick="askOmniAI()">Query</button>
+        </div>
+    </div>
+
+    <script>
+        // Local Matrix Knowledge Bank for quick responses without hitting server limits
+        const knowledgeBase = {
+            "hello": "Greetings Operator. Biometric threat index is normal. What system node are we inspecting today?",
+            "hi": "Greetings Operator. Biometric threat index is normal. What system node are we inspecting today?",
+            "suit": "The OMNI Security Suit operates under full-body tactical plating equipped with real-time biometric locks and an encrypted heads-up display.",
+            "costume": "The OMNI Security Suit operates under full-body tactical plating equipped with real-time biometric locks and an encrypted heads-up display.",
+            "gear": "Recommended OMNI configurations: Tactical utility belts, heavy reinforcement impact vests, smart visors, and high-traction duty boots.",
+            "users": "Analyzing database metrics... Current users are undergoing cryptographic screening. Use your Admin Panel URL to inspect raw identity details.",
+            "admin": "The Admin panel is isolated via admin.html directory block to maintain total network security away from compromised users.",
+            "help": "Available OMNI protocols: Ask me about 'suit configurations', 'recommended gear', or 'active user screening protocols'."
+        };
+
+        function handleKeyPress(e) { if(e.key === 'Enter') { askOmniAI(); } }
+
+        function askOmniAI() {
+            const inputField = document.getElementById('userInput');
+            const queryText = inputField.value.trim().toLowerCase();
+            if(!queryText) return;
+
+            const chatBox = document.getElementById('chatBox');
+
+            // Print User Message
+            chatBox.innerHTML += `<div class="msg user-msg">${inputField.value}</div>`;
+            inputField.value = "";
+
+            // Simple loading delay simulation to feel like processing AI thought
+            setTimeout(() => {
+                let aiReply = "> Core Warning: Matrix data insufficient. Try asking me about 'suit', 'gear', 'users', or type 'help' for tactical guidelines.";
+                
+                // Match keywords from our brain script
+                for (let keyword in knowledgeBase) {
+                    if (queryText.includes(keyword)) {
+                        aiReply = `> ${knowledgeBase[keyword]}`;
+                        break;
+                    }
+                }
+                
+                chatBox.innerHTML += `<div class="msg bot-msg">${aiReply}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 600);
+        }
+    </script>
+</body>
+</html>
