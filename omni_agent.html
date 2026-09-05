@@ -17,10 +17,9 @@
             min-height: 100vh;
         }
         .agent-container {
-            background: rgba(6, 12, 28, 0.95);
+            background: #0b1220;
             border: 2px solid #00ffaa;
-            box-shadow: 0 0 25px rgba(0, 255, 170, 0.25);
-            border-radius: 8px;
+            border-radius: 6px;
             width: 100%;
             max-width: 850px;
             height: 600px;
@@ -30,44 +29,43 @@
         }
         .header {
             text-align: center;
-            border-bottom: 1px dashed rgba(0, 255, 170, 0.3);
+            border-bottom: 1px dashed rgba(0, 255, 170, 0.4);
             padding-bottom: 10px;
             margin-bottom: 15px;
         }
-        .header h2 { letter-spacing: 3px; text-shadow: 0 0 10px #00ffaa; font-size: 1.3rem; }
-        .header p { font-size: 0.7rem; color: #8a99ad; margin-top: 5px; }
+        .header h2 { letter-spacing: 2px; font-size: 1.3rem; color: #00ffaa; }
+        .header p { font-size: 0.75rem; color: #8a99ad; margin-top: 5px; }
         
         .agent-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; flex: 1; min-height: 0; }
         @media(max-width: 700px) { .agent-grid { grid-template-columns: 1fr; } }
 
-        /* Terminal Window Messaging */
-        .terminal-panel { display: flex; flex-direction: column; background: #010308; border: 1px solid rgba(0, 255, 170, 0.4); border-radius: 4px; padding: 12px; }
-        .log-display { flex: 1; overflow-y: auto; font-size: 0.8rem; line-height: 1.4; margin-bottom: 12px; padding-right: 5px; }
+        /* Terminal Display Panels */
+        .terminal-panel { display: flex; flex-direction: column; background: #010308; border: 1px solid #00ffaa; border-radius: 4px; padding: 12px; }
+        .log-display { flex: 1; overflow-y: auto; font-size: 0.85rem; line-height: 1.4; margin-bottom: 12px; padding-right: 5px; }
         
         .line { margin-bottom: 10px; padding: 8px; border-radius: 4px; white-space: pre-wrap; word-wrap: break-word; }
-        .thought-line { color: #ebff00; background: rgba(235, 255, 0, 0.05); font-style: italic; border-left: 2px dashed #ebff00; }
-        .omni-line { color: #00ffaa; background: rgba(0, 255, 170, 0.06); border-left: 3px solid #00ffaa; }
-        .operator-line { color: #00b8ff; background: rgba(0, 170, 255, 0.06); border-right: 3px solid #00b8ff; text-align: right; }
-        .owner-line { color: #ff3366; background: rgba(255, 51, 102, 0.08); border-right: 3px solid #ff3366; text-align: right; font-weight: bold; }
+        .thought-line { color: #ffff00; background: rgba(255, 255, 0, 0.1); font-style: italic; border-left: 2px dashed #ffff00; }
+        .omni-line { color: #00ffaa; background: rgba(0, 255, 170, 0.08); border-left: 3px solid #00ffaa; }
+        .operator-line { color: #00b8ff; background: rgba(0, 170, 255, 0.08); border-right: 3px solid #00b8ff; text-align: right; }
+        .owner-line { color: #ff3366; background: rgba(255, 51, 102, 0.12); border-right: 3px solid #ff3366; text-align: right; font-weight: bold; }
 
-        /* Quick Action Options Area */
+        /* Navigation Option Triggers */
         .options-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
-        .opt-btn { background: rgba(0, 255, 170, 0.1); border: 1px solid #00ffaa; color: #00ffaa; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; font-family: monospace; border-radius: 4px; transition: all 0.2s; }
-        .opt-btn:hover { background: #00ffaa; color: #050814; box-shadow: 0 0 10px rgba(0, 255, 170, 0.4); }
+        .opt-btn { background: transparent; border: 1px solid #00ffaa; color: #00ffaa; padding: 6px 12px; font-size: 0.75rem; cursor: pointer; font-family: monospace; border-radius: 4px; }
+        .opt-btn:hover { background: #00ffaa; color: #050814; font-weight: bold; }
 
         .input-row { display: flex; gap: 8px; }
-        .input-row input { flex: 1; padding: 12px; background: #0b1528; border: 1px solid #00ffaa; color: #fff; outline: none; font-family: monospace; border-radius: 4px; font-size: 0.85rem; }
-        .input-row input:focus { box-shadow: 0 0 10px rgba(0, 255, 170, 0.3); }
+        .input-row input { flex: 1; padding: 12px; background: #050914; border: 1px solid #00ffaa; color: #fff; outline: none; font-family: monospace; border-radius: 4px; font-size: 0.85rem; }
         .btn { background: #00ffaa; color: #050814; font-weight: bold; border: none; padding: 0 25px; cursor: pointer; border-radius: 4px; text-transform: uppercase; font-size: 0.85rem; }
-        .btn:hover { background: #fff; box-shadow: 0 0 15px #00ffaa; }
-        .btn:disabled { background: #1c2c3c; color: #4a5c6c; cursor: not-allowed; box-shadow: none; }
+        .btn:hover { background: #ffffff; color: #050814; }
+        .btn:disabled { background: #222; color: #555; cursor: not-allowed; }
         
-        /* Toolkit Framework Status Displays */
-        .tools-panel { background: #020612; border: 1px dashed rgba(0, 255, 170, 0.3); border-radius: 4px; padding: 15px; font-size: 0.75rem; display: flex; flex-direction: column; gap: 12px; }
-        .tool-box { background: #050919; border: 1px solid #1a2c4c; padding: 10px; border-radius: 4px; }
-        .status-active { color: #00ffaa; font-weight: bold; text-shadow: 0 0 5px #00ffaa; }
+        /* Subsystem Panels */
+        .tools-panel { background: #070d1a; border: 1px dashed #00ffaa; border-radius: 4px; padding: 15px; font-size: 0.75rem; display: flex; flex-direction: column; gap: 12px; }
+        .tool-box { background: #010308; border: 1px solid rgba(0, 255, 170, 0.3); padding: 10px; border-radius: 4px; }
+        .status-active { color: #00ffaa; font-weight: bold; }
         .status-idle { color: #8a99ad; }
-        .status-owner { color: #ff3366; font-weight: bold; text-shadow: 0 0 5px #ff3366; }
+        .status-owner { color: #ff3366; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -79,13 +77,11 @@
         </div>
         
         <div class="agent-grid">
-            <!-- Left Panel: Main Autonomous Processing Core -->
             <div class="terminal-panel">
                 <div class="log-display" id="logDisplay">
-                    <div class="line omni-line">> Neural Link online. I am OMNI AI, powered by Cera.com for the NexasVerse.inc network infrastructure. Systematic protocols are running at peak efficiency. The OMNI security matrix remains intact. Feel free to ask me about OMNI core features...</div>
+                    <div class="line omni-line">> Neural Link online. I am OMNI AI, powered by Cera.com for the NexasVerse.inc network infrastructure. The OMNI security matrix remains intact. Feel free to ask me about OMNI core features...</div>
                 </div>
 
-                <!-- Clickable Interactive Options Panel for Users -->
                 <div class="options-row">
                     <button class="opt-btn" onclick="sendOption('Explain OMNI Core Features')">🛡️ Core Features</button>
                     <button class="opt-btn" onclick="sendOption('Verify Login Portal Status')">🟢 Portal Status</button>
@@ -98,9 +94,8 @@
                 </div>
             </div>
 
-            <!-- Right Panel: Core Integration Dashboard -->
             <div class="tools-panel">
-                <h3 style="border-bottom: 1px solid rgba(0, 255, 170, 0.2); padding-bottom: 5px; letter-spacing: 1px; font-size: 0.85rem;">AGENCY SUBSYSTEMS</h3>
+                <h3 style="border-bottom: 1px solid rgba(0, 255, 170, 0.2); padding-bottom: 5px; font-size: 0.85rem;">AGENCY SUBSYSTEMS</h3>
                 <div class="tool-box">
                     <div><strong>Database Connection:</strong></div>
                     <div>Google Sheet Sync: <span id="tool1" class="status-active">ONLINE</span></div>
@@ -113,47 +108,39 @@
                     <div><strong>Clearance Credentials:</strong></div>
                     <div>Access Authorization: <span id="tool3" class="status-active">OPERATOR</span></div>
                 </div>
-                <div style="margin-top: auto; font-size: 0.65rem; color: rgba(0,255,170,0.4); text-align: center; line-height: 1.3;">
-                    WARNING: Root execution requires system-specific cryptographic signature key phrases.
-                </div>
             </div>
         </div>
     </div>
 
     <script>
-        const API_URL = "https://huggingface.co";
-        const KEY_TOKEN = "hf_" + "wJvU" + "uSjW" + "gqfV" + "fWwS" + "eZRE" + "zByC" + "ZbyG" + "vAnZ" + "qZco";
-
         let isOwnerMode = false;
 
-        // Core memory tracking array to give the agent conversation logic
-        let agentMemory = [
-            {
-                role: "system",
-                content: "You are the OMNI AI Agent, an advanced, completely autonomous cyber security intelligence operative representing the corporation NexasVerse.inc. Your core brain engine is powered by Cera.com. Your ultimate owner and master administrator is WhiteX. You do not just print passive script text; you actively plan out your actions step-by-step. ALWAYS maintain a futuristic, cybernetic, friendly, and analytical sci-fi tone. You must naturally weave proud OMNI references into your thought logs and statements, such as: 'The OMNI security matrix remains intact' or 'Feel free to ask me about OMNI core features...'. You fully manage and monitor the public OMNI Login Portal (the green rotating animation circle) and the private Admin Command Hub (admin.html table tracker). If the user types the secret admin bypass command '/nvm', you must transition into an hyper-secure owner mode, salute WhiteX, and grant root access protocols."
-            }
-        ];
+        // Custom local engine matrices containing instant responsive knowledge trees
+        const localIntelEngine = {
+            "feature": "OMNI Network Core Infrastructure Breakdown:\n• OMNI LOGIN PORTAL: Secure front gateway loading the green holographic 'OMNI SUCCESSFULLY SECURED' rotating animation loop ring.\n• ADMIN COMMAND HUB: Hidden panel framework (admin.html) built for identity logs tracking, row clearing operations, and emergency red message broadcasts.\n• CERA INTELLIGENCE LAYER: Sandboxed client logic designed to scale seamlessly inside standard layout viewports.\n\nSystem Notice: Feel free to ask me about OMNI core features...",
+            "portal": "Mainframe Diagnostic Result: The OMNI Login Portal channel status is 100% NOMINAL. Biometric authentication nodes are active and waiting to pass user credentials to the main secured animation screen layer. System Notice: The OMNI security matrix remains intact.",
+            "status": "Mainframe Diagnostic Result: The OMNI Login Portal channel status is 100% NOMINAL. Biometric authentication nodes are active and waiting to pass user credentials to the main secured animation screen layer. System Notice: The OMNI security matrix remains intact.",
+            "scan": "Scanning local tracking vault registers... Data sync status: 100% SUCCESS. Google Sheet log records are currently locked and clean under standard network permissions. System Notice: Feel free to ask me about OMNI core features...",
+            "log": "Scanning local tracking vault registers... Data sync status: 100% SUCCESS. Google Sheet log records are currently locked and clean under standard network permissions. System Notice: Feel free to ask me about OMNI core features...",
+            "email": "Action command routed. Activating OMNI communication subroutines. Drafting notification template parameters... Live email update dispatched to the NexasVerse.inc server grid. System Notice: The OMNI security matrix remains intact.",
+            "send": "Action command routed. Activating OMNI communication subroutines. Drafting notification template parameters... Live email update dispatched to the NexasVerse.inc server grid. System Notice: The OMNI security matrix remains intact.",
+            "hello": "Greetings Operator. Biometric parameters matching standard NexasVerse.inc registers. Powered by Cera.com, I am standing by to audit suit armor specs or scan databases. Feel free to ask me about OMNI core features...",
+            "hi": "Greetings Operator. Biometric parameters matching standard NexasVerse.inc registers. Powered by Cera.com, I am standing by to audit suit armor specs or scan databases. Feel free to ask me about OMNI core features..."
+        };
 
         function checkKey(e) { if (e.key === 'Enter') processAgentQuery(); }
         function sendOption(phrase) { document.getElementById('agentInput').value = phrase; processAgentQuery(); }
 
-        async function processAgentQuery() {
+        function processAgentQuery() {
             const inputField = document.getElementById('agentInput');
             const displayBox = document.getElementById('logDisplay');
             const execBtn = document.getElementById('execBtn');
             const rawText = inputField.value.trim();
             if (!rawText) return;
 
-            // Clear input box immediately
             inputField.value = "";
 
-            // Check if secret key language parameter is activated
+            // 1. CHECKS SECURED KEY LANGUAGE OWNER BYPASS MATRIX INSTANTLY
             if (rawText.toLowerCase() === "/nvm") {
                 isOwnerMode = true;
                 displayBox.innerHTML += `<div class="line owner-line">[SECRET BYPASS CODE TRANSMITTED: /nvm]</div>`;
-                displayBox.innerHTML += `<div class="line thought-line">🧠 [AUTONOMOUS THOUGHT SYSTEM] > Secret authorization token recognized. Code match verified: WhiteX cryptographic keyway. Suspending secondary security walls. Promoting workspace nodes to ROOT level...</div>`;
-                
-                document.getElementById('tool3').className = "status-owner";
-                document.getElementById('tool3').innerText = "WHITE_X (OWNER)";
-                
-                setTimeout(() => {
