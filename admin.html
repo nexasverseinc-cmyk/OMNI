@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMNI Core Admin Control</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #050814;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00ffaa;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .panel-box {
+            background: rgba(6, 12, 28, 0.95);
+            border: 2px solid #00ffaa;
+            box-shadow: 0 0 20px rgba(0, 255, 170, 0.15);
+            border-radius: 6px;
+            padding: 25px;
+            width: 100%;
+            max-width: 900px;
+        }
+        h1 { letter-spacing: 4px; margin-bottom: 25px; text-shadow: 0 0 10px #00ffaa; text-align: center; }
+        .field-row { margin-bottom: 15px; text-align: left; }
+        .field-row label { display: block; font-size: 0.75rem; margin-bottom: 6px; letter-spacing: 2px; color: #8a99ad; }
+        .field-row textarea {
+            width: 100%; padding: 12px; background: #0b1528; border: 1px solid #00ffaa;
+            color: #fff; outline: none; font-family: monospace; border-radius: 4px;
+        }
+        .action-button {
+            width: 100%; padding: 14px; background: #00ffaa; color: #050814;
+            font-weight: bold; border: none; cursor: pointer; letter-spacing: 2px; text-transform: uppercase;
+            border-radius: 4px;
+        }
+        .action-button:hover { background: #fff; box-shadow: 0 0 15px #00ffaa; }
+        .admin-dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media(max-width: 700px) { .admin-dashboard-grid { grid-template-columns: 1fr; } }
+        .dashboard-card { background: #02040a; border: 1px solid rgba(0, 255, 170, 0.4); padding: 20px; border-radius: 4px; }
+        .log-grid-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 10px; }
+        .log-grid-table th, .log-grid-table td { border: 1px solid rgba(0,255,170,0.3); padding: 10px; text-align: left; }
+        .log-grid-table th { background: rgba(0,255,170,0.1); color: #00ffaa; }
+        .purge-btn { background: #ff3333; color: white; border: none; padding: 4px 8px; cursor: pointer; font-size: 0.75rem; border-radius: 3px; }
+        .mail-btn { background: #00aaff; color: white; border: none; padding: 4px 8px; cursor: pointer; font-size: 0.75rem; margin-left: 5px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <div class="panel-box">
+        <h1>SYSTEM MANAGEMENT CONTROL CENTER</h1>
+        
+        <div class="admin-dashboard-grid">
+            <div class="dashboard-card">
+                <h3>Control Hub Alerts</h3>
+                <p style="font-size:0.7rem; color:#8a99ad; margin-bottom:15px;">Broadcast warning alert text blocks directly onto the public User Portal screen.</p>
+                <div class="field-row">
+                    <label>Security Notification Text String</label>
+                    <textarea id="warnAlertTextArea" rows="3" placeholder="Type system alert broadcast script..."></textarea>
+                </div>
+                <button class="action-button" onclick="activateAdminWarningText()" style="margin-bottom: 10px;">Broadcast Threat Warning</button>
+                <button class="action-button" style="background:transparent; border:1px solid #ff3333; color:#ff3333;" onclick="clearAdminWarningText()">Clear Active Alert</button>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Admin Management & History</h3>
+                <p style="font-size:0.7rem; color:#8a99ad; margin-bottom:10px;">Review identity values typed inside the user portal instantly.</p>
+                <table class="log-grid-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Password</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="databaseLogsTableBody">
+                        <tr><td colspan="3" style="text-align:center; color:#8a99ad; padding: 20px;">No access logs recorded yet.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateAdminPanelGrid() {
+            let memoryLogsDatabase = JSON.parse(localStorage.getItem('omni_global_history')) || [];
+            const ledgerBody = document.getElementById('databaseLogsTableBody');
+            ledgerBody.innerHTML = "";
+
+            if(memoryLogsDatabase.length === 0) {
+                ledgerBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#8a99ad; padding: 20px;">No access logs recorded yet.</td></tr>`;
+                return;
+            }
+
+            memoryLogsDatabase.forEach((logItem, logIndex) => {
+                const trRow = document.createElement('tr');
+                trRow.innerHTML = `
+                    <td><strong>${logItem.accountName}</strong></td>
+                    <td><span style="color:#ffcc00; font-weight:bold;">${logItem.securityKey}</span></td>
+                    <td>
+                        <button class="purge-btn" type="button" onclick="eraseMainframeLog(${logIndex})">Remove</button>
+                        <button class="mail-btn" type="button" onclick="launchSimulatedMailGrid('${logItem.accountName}')">Email</button>
+                    </td>
+                `;
+                ledgerBody.appendChild(trRow);
+            });
+        }
+
+        updateAdminPanelGrid();
+
+        window.eraseMainframeLog = function(targetIndex) {
+            let memoryLogsDatabase = JSON.parse(localStorage.getItem('omni_global_history')) || [];
+            memoryLogsDatabase.splice(targetIndex, 1);
+            localStorage.setItem('omni_global_history', JSON.stringify(memoryLogsDatabase));
+            updateAdminPanelGrid();
+            alert("Identity data row permanently removed.");
+        }
+
+        window.launchSimulatedMailGrid = function(accountUser) {
+            alert(`[OMNI CORRESPONDENCE LOG]\n\nEmail template report generated for: ${accountUser}`);
+        }
+
+        function activateAdminWarningText() {
+            const currentBroadcastScript = document.getElementById('warnAlertTextArea').value;
+            if(!currentBroadcastScript.trim()) return;
+            localStorage.setItem('omni_global_alert', currentBroadcastScript);
+            alert("Warning text broadcasted over to the User console screen.");
+        }
+
+        function clearAdminWarningText() {
+            document.getElementById('warnAlertTextArea').value = "";
+            localStorage.removeItem('omni_global_alert');
+            alert("Warning broadcast cleared.");
+        }
+    </script>
+</body>
+</html>
